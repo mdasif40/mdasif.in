@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md Asif - Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#121214',
+                            card: '#19191d',
+                            surface: '#222227',
+                            border: '#33333b',
+                            muted: '#8e8e93',
+                            light: '#e4e4e7',
+                            white: '#ffffff',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Syne, Space Mono & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121214;
+            color: #e4e4e7;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .font-syne {
+            font-family: 'Syne', sans-serif;
+        }
+
+        /* Film-grain texture overlay matching screenshot 7 */
+        .bg-grain {
+            background-color: #121214;
+            background-image: 
+                radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0),
+                radial-gradient(rgba(0, 0, 0, 0.5) 1px, transparent 0);
+            background-size: 18px 18px, 12px 12px;
+        }
+
+        /* Film Noise Overlay CSS */
+        .film-noise {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,0.015) 0%, rgba(0,0,0,0.03) 100%);
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.7;
+        }
+
+        /* Dual Tilted Marquee Tapes */
+        @keyframes marquee-left {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes marquee-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
+        }
+
+        .animate-marquee-left {
+            display: flex;
+            width: 200%;
+            animation: marquee-left 26s linear infinite;
+        }
+        .animate-marquee-right {
+            display: flex;
+            width: 200%;
+            animation: marquee-right 28s linear infinite;
+        }
+        .animate-marquee-left:hover, .animate-marquee-right:hover {
+            animation-play-state: paused;
+        }
+
+        /* Neo-Brutalist White Outlined Header Outline */
+        .text-outline {
+            -webkit-text-stroke: 1.5px #ffffff;
+            color: transparent;
+        }
+
+        /* Neo-Brutalist Buttons */
+        .btn-white-solid {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        .btn-white-solid:hover {
+            background-color: #d4d4d8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-white-outline {
+            background-color: transparent;
+            color: #ffffff;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        .btn-white-outline:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* High-contrast Black & White CAD image filter */
+        .cad-bw-image {
+            filter: grayscale(100%) contrast(140%) brightness(90%) invert(90%);
+            mix-blend-mode: screen;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cad-bw-image:hover {
+            filter: grayscale(100%) contrast(160%) brightness(105%) invert(90%);
+            transform: scale(1.04);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121214;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2b2b32;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-grain selection:bg-white selection:text-black min-h-screen flex flex-col">
+
+    <!-- Film Grain Overlay -->
+    <div class="film-noise"></div>
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-[#121214]/90 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3">
+                <div class="flex flex-col">
+                    <span class="font-syne font-black tracking-wider text-lg uppercase text-white">MD ASIF</span>
+                    <span class="text-[9px] text-zinc-400 font-mono -mt-1 tracking-widest uppercase">MECHANICAL ENGINEER</span>
+                </div>
+            </a>
+
+            <!-- Nav Links (Desktop) -->
+            <nav class="hidden md:flex items-center gap-8 lg:gap-10 font-mono text-xs uppercase tracking-widest text-zinc-400 font-bold">
+                <a href="#about" class="hover:text-white transition-colors">ABOUT</a>
+                <a href="#projects" class="hover:text-white transition-colors">PROJECTS</a>
+                <a href="#experience" class="hover:text-white transition-colors">EXPERIENCE</a>
+                <a href="#contact" class="hover:text-white transition-colors">CONTACT</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-4">
+                <a href="#contact" class="hidden sm:inline-flex btn-white-solid text-xs uppercase px-5 py-2.5">
+                    GET IN TOUCH
+                </a>
+                <button id="mobileMenuBtn" class="md:hidden text-zinc-300 hover:text-white text-2xl p-2 focus:outline-none" aria-label="Toggle Navigation Menu">
+                    <i class="fa-solid fa-bars-staggered" id="menuIcon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-brand-card border-b border-white/10 px-6 py-6 space-y-4 font-mono text-xs uppercase transition-all duration-300">
+            <a href="#about" class="mobile-nav-link block text-zinc-300 hover:text-white py-2">About</a>
+            <a href="#projects" class="mobile-nav-link block text-zinc-300 hover:text-white py-2">Projects</a>
+            <a href="#experience" class="mobile-nav-link block text-zinc-300 hover:text-white py-2">Experience</a>
+            <a href="#contact" class="mobile-nav-link block text-zinc-300 hover:text-white py-2">Contact</a>
+            <a href="#contact" class="mobile-nav-link block text-center btn-white-solid py-3 mt-4">Get In Touch</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20 flex-grow">
+
+        <!-- HERO SECTION -->
+        <section id="about" class="relative min-h-[80vh] sm:min-h-[85vh] flex items-center border-b border-white/10 overflow-hidden py-16 sm:py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center relative z-10 my-auto">
+                
+                <div class="inline-block bg-zinc-900 border border-zinc-700 px-3 sm:px-4 py-1.5 mb-6 font-mono text-[10px] sm:text-xs text-zinc-300 font-bold uppercase tracking-widest">
+                    H E L L O &nbsp; W O R L D !
+                </div>
+
+                <!-- Outline Big Hero Display Header -->
+                <h1 class="font-syne text-5xl sm:text-8xl lg:text-9xl font-black uppercase tracking-tight leading-none mb-6 text-outline">
+                    MD ASIF
+                </h1>
+
+                <p class="text-zinc-400 font-mono text-xs sm:text-base max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-10 px-2">
+                    Propulsion & Vehicle Dynamics Engineer specializing in structural FEA analysis, multi-axis kinematic systems, and Stirling thermodynamic cryocooler simulations.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-md sm:max-w-none mx-auto px-4">
+                    <a href="#projects" class="btn-white-solid text-xs uppercase px-8 py-4 flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <span>EXPLORE PROJECTS</span>
+                        <i class="fa-solid fa-arrow-down text-xs"></i>
+                    </a>
+                    <a href="#experience" class="btn-white-outline text-xs uppercase px-8 py-4 flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <span>VIEW CAREER HISTORY</span>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- DUAL TILTED MONOCHROME MARQUEE BANNERS -->
+        <section class="relative py-12 sm:py-16 overflow-hidden bg-black border-b border-white/10">
+            
+            <!-- Strip 1: Tilted -2 Degrees (White Banner with Black Text) -->
+            <div class="transform -rotate-2 scale-105 bg-white text-black font-syne font-black uppercase text-lg sm:text-2xl tracking-tighter py-3 sm:py-3.5 border-y-2 border-black relative z-20">
+                <div class="animate-marquee-left whitespace-nowrap flex items-center gap-6 sm:gap-8">
+                    <span>✦ THERMODYNAMICS</span>
+                    <span>✦ FEA & CFD ANALYSIS</span>
+                    <span>✦ KINEMATICS</span>
+                    <span>✦ VEHICLE DYNAMICS</span>
+                    <span>✦ PROPULSION SYSTEMS</span>
+                    <span>✦ REVERSE ENGINEERING</span>
+                    <!-- Loop repeat -->
+                    <span>✦ VEHICLE DYNAMICS</span>
+                    <span>✦ FEA & CFD ANALYSIS</span>
+                    <span>✦ KINEMATICS</span>
+                    <span>✦ PROPULSION SYSTEMS</span>
+                    <span>✦ THERMODYNAMICS</span>
+                    <span>✦ REVERSE ENGINEERING</span>
+                </div>
+            </div>
+
+            <!-- Strip 2: Tilted +2 Degrees (Dark Background with White Border & Text) -->
+            <div class="transform rotate-2 scale-105 bg-brand-bg text-white font-syne font-black uppercase text-lg sm:text-2xl tracking-tighter py-3 sm:py-3.5 border-y-2 border-white relative z-10 -mt-4 sm:-mt-5">
+                <div class="animate-marquee-right whitespace-nowrap flex items-center gap-6 sm:gap-8">
+                    <span>✦ SOLIDWORKS</span>
+                    <span>✦ ANSYS MECHANICAL</span>
+                    <span>✦ FLUENT CFD</span>
+                    <span>✦ MATLAB / PYTHON</span>
+                    <span>✦ COMPOSITE LAY-UP</span>
+                    <span>✦ SOLAR VEHICLES</span>
+                    <!-- Loop repeat -->
+                    <span>✦ SOLIDWORKS</span>
+                    <span>✦ ANSYS MECHANICAL</span>
+                    <span>✦ FLUENT CFD</span>
+                    <span>✦ MATLAB / PYTHON</span>
+                    <span>✦ COMPOSITE LAY-UP</span>
+                    <span>✦ ESVC & BSVC SOLAR VEHICLES</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- REAL PROJECTS SECTION -->
+        <section id="projects" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-white/10">
+            
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 sm:mb-16 gap-4">
+                <div>
+                    <span class="font-mono text-zinc-500 text-xs uppercase tracking-widest font-bold">FEATURED CASE STUDIES</span>
+                    <h2 class="font-syne text-3xl sm:text-5xl font-black text-white uppercase tracking-tight mt-1">
+                        SELECTED PROJECTS
+                    </h2>
+                </div>
+            </div>
+
+            <div class="space-y-12 sm:space-y-16">
+                
+                <!-- PROJECT 01: WHEEL ASSEMBLY -->
+                <div class="bg-brand-card border border-white/15 p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center hover:border-white transition-all">
+                    
+                    <!-- Left Details -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <span class="font-mono text-xs text-zinc-500 font-bold block">0 1</span>
+                        
+                        <div class="space-y-2">
+                            <h3 class="font-syne text-3xl sm:text-5xl font-black uppercase text-white leading-tight">
+                                WHEEL ASSEMBLY
+                            </h3>
+                            <p class="font-mono text-xs text-zinc-400 tracking-wider">
+                                VEHICLE DYNAMICS / FEA / MANUFACTURE
+                            </p>
+                        </div>
+
+                        <!-- Project Summary -->
+                        <div class="bg-zinc-900 border border-zinc-800 p-4 sm:p-6 space-y-3 font-sans">
+                            <span class="font-mono text-[10px] text-zinc-400 uppercase tracking-widest font-bold block">PROJECT SUMMARY</span>
+                            <ul class="text-zinc-300 text-xs sm:text-sm space-y-2 leading-relaxed">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-zinc-500 font-mono">—</span>
+                                    <span>Designed custom lightweight hub & steering knuckle for ESVC solar car.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-zinc-500 font-mono">—</span>
+                                    <span>Optimized corner structural integrity using Finite Element Analysis (FEA).</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-zinc-500 font-mono">—</span>
+                                    <span>Reduced total unsprung mass while preserving critical load handling parameters.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="pt-2">
+                            <button onclick="openModal('project1')" class="btn-white-outline text-xs uppercase px-6 py-3 flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto">
+                                <i class="fa-solid fa-file-pdf"></i>
+                                <span>PROJECT PDF</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right CAD Image Viewport -->
+                    <div class="lg:col-span-6 bg-zinc-950 border border-zinc-800 h-[280px] sm:h-[380px] flex items-center justify-center p-4 sm:p-6 relative group overflow-hidden">
+                        
+                        <div class="absolute top-3 left-3 bg-black border border-zinc-700 px-2.5 py-1 font-mono text-[9px] sm:text-[10px] text-zinc-400 z-10">
+                            CAD MODEL • STEERING KNUCKLE ASSEMBLY
+                        </div>
+
+                        <!-- Actual B&W CAD Model Image -->
+                        <img src="knuckle.jpg" alt="Wheel Assembly Steering Knuckle CAD" class="max-h-full max-w-full object-contain cad-bw-image">
+
+                        <div class="absolute bottom-3 right-3 font-mono text-[9px] sm:text-[10px] text-zinc-400 z-10">
+                            ESVC SOLAR CAR HUB / FEA PASS
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- PROJECT 02: F35-3BSM KINEMATICS -->
+                <div class="bg-brand-card border border-white/15 p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center hover:border-white transition-all">
+                    
+                    <!-- Left Details -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <span class="font-mono text-xs text-zinc-500 font-bold block">0 2</span>
+                        
+                        <div class="space-y-2">
+                            <h3 class="font-syne text-3xl sm:text-5xl font-black uppercase text-white leading-tight">
+                                F35-3BSM KINEMATICS
+                            </h3>
+                            <p class="font-mono text-xs text-zinc-400 tracking-wider">
+                                REVERSE ENGINEERING / CAD / PRODUCT DESIGN
+                            </p>
+                        </div>
+
+                        <!-- Project Summary -->
+                        <div class="bg-zinc-900 border border-zinc-800 p-4 sm:p-6 space-y-3 font-sans">
+                            <span class="font-mono text-[10px] text-zinc-400 uppercase tracking-widest font-bold block">PROJECT SUMMARY</span>
+                            <ul class="text-zinc-300 text-xs sm:text-sm space-y-2 leading-relaxed">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-zinc-500 font-mono">—</span>
+                                    <span>Reverse-engineering the F-35 thrust-vectoring nozzle kinematics layout.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-zinc-500 font-mono">—</span>
+                                    <span>Simulating multi-axis 3-bearing gear rotation matrices for VTOL transitions.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="pt-2">
+                            <button onclick="openModal('project2')" class="btn-white-outline text-xs uppercase px-6 py-3 flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto">
+                                <i class="fa-solid fa-file-pdf"></i>
+                                <span>PROJECT PDF</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right CAD Image Viewport -->
+                    <div class="lg:col-span-6 bg-zinc-950 border border-zinc-800 h-[280px] sm:h-[380px] flex items-center justify-center p-4 sm:p-6 relative group overflow-hidden">
+                        
+                        <div class="absolute top-3 left-3 bg-black border border-zinc-700 px-2.5 py-1 font-mono text-[9px] sm:text-[10px] text-zinc-400 z-10">
+                            3-BEARING SWIVEL MODULE (3BSM)
+                        </div>
+
+                        <!-- Actual B&W CAD Model Image -->
+                        <img src="3BSM.jpeg" alt="F35-3BSM Kinematics CAD Nozzle" class="max-h-full max-w-full object-contain cad-bw-image">
+
+                        <div class="absolute bottom-3 right-3 font-mono text-[9px] sm:text-[10px] text-zinc-400 z-10">
+                            VTOL THRUST VECTORING / 90° DEFLECTION
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- PROJECT 03: STIRLING CRYOCOOLER -->
+                <div class="bg-brand-card border border-white/15 p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center hover:border-white transition-all">
+                    
+                    <!-- Left Details -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <span class="font-mono text-xs text-zinc-500 font-bold block">0 3</span>
+                        
+                        <div class="space-y-2">
+                            <h3 class="font-syne text-2xl sm:text-4xl lg:text-5xl font-black uppercase text-white leading-tight break-words tracking-tight">
+                            STIRLING CRYOCOOLER
+                            </h3>
+                            <p class="font-mono text-xs text-zinc-400 tracking-wider">
+                            THERMODYNAMICS / FEA & CFD / CAD
+                            </p>
+                        </div>
+
+                        <!-- Project Summary -->
+                        <div class="bg-zinc-900 border border-zinc-800 p-4 sm:p-6 space-y-3 font-sans">
+                            <span class="font-mono text-[10px] text-zinc-400 uppercase tracking-widest font-bold block">PROJECT SUMMARY</span>
+                            <ul class="text-zinc-300 text-xs sm:text-sm space-y-2 leading-relaxed">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-zinc-500 font-mono">—</span>
+                                    <span>Formulated 1D thermodynamic model in Python/MATLAB via Schmidt theory (5 W at 80 K).</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-zinc-500 font-mono">—</span>
+                                    <span>Engineered 3D CAD assemblies for compressor, mesh regenerator, and displacer in SolidWorks.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-zinc-500 font-mono">—</span>
+                                    <span>Analyzed CFD/transient thermal mesh matrices and simulated COP to yield 15% efficiency boost.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                            <button onclick="openModal('project3')" class="btn-white-outline text-xs uppercase px-6 py-3 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-file-pdf"></i>
+                                <span>PROJECT PDF</span>
+                            </button>
+                            <span class="font-mono text-[11px] text-zinc-400 border border-dashed border-zinc-700 px-3 py-2 uppercase text-center sm:text-left">
+                                • WORK IN PROGRESS
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Right CAD Work In Progress Card -->
+                    <div class="lg:col-span-6 bg-zinc-950 border border-dashed border-zinc-800 h-[280px] sm:h-[380px] flex items-center justify-center p-4 sm:p-6 relative group">
+                        
+                        <div class="text-center space-y-3">
+                            <div class="w-3 h-3 bg-white rounded-full animate-ping mx-auto"></div>
+                            <span class="font-mono text-xs text-zinc-300 uppercase tracking-widest font-bold block">WORK IN PROGRESS</span>
+                            <p class="font-mono text-[11px] text-zinc-400 max-w-xs px-2">
+                                Schmidt Theory 1D Matrix • 5W at 80K Thermal Regenerator Mesh Simulation
+                            </p>
+                        </div>
+
+                        <div class="absolute bottom-3 right-3 font-mono text-[9px] sm:text-[10px] text-zinc-400">
+                            COP SIMULATION: +15% EFFICIENT
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CAREER / EXPERIENCE SECTION -->
+        <section id="experience" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-white/10">
+            
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 sm:mb-16 gap-4">
+        <div>
+            <span class="font-mono text-zinc-500 text-xs uppercase tracking-widest font-bold">CAREER HISTORY & RESEARCH</span>
+            <h2 class="font-syne text-3xl sm:text-5xl font-black text-white uppercase tracking-tight mt-1">
+                EXPERIENCE
+            </h2>
+        </div>
+    </div>
+
+    <div class="space-y-12 sm:space-y-16">
+        
+        <!-- Experience Item 1: TEAM DTU SUPERMILEAGE (3-Level Progressive Career Ladder) -->
+        <div class="bg-brand-card border border-white/10 p-6 sm:p-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+                
+                <!-- Left Column: Company & Duration -->
+                <div class="lg:col-span-4 space-y-3 border-b lg:border-b-0 lg:border-r border-zinc-800 pb-6 lg:pb-0 lg:pr-8">
+                    <h3 class="font-syne text-2xl sm:text-3xl font-black text-white uppercase">
+                        TEAM DTU SUPERMILEAGE
+                    </h3>
+                    <div class="font-mono text-xs text-zinc-400 space-y-1">
+                        <p class="text-white font-bold">FULL-TIME • 1 YR 3 MOS</p>
+                        <p>DELHI, INDIA • ON-SITE</p>
+                    </div>
+                </div>
+
+                <!-- Right Column: Timeline Roles (Shifted cleanly to the right) -->
+                <div class="lg:col-span-8 space-y-8 sm:space-y-10 lg:pl-4">
+                    
+                    <!-- Role 1: Head of Vehicle Dynamics -->
+                    <div class="relative pl-6 border-l-2 border-white space-y-3">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 bg-white rounded-none"></div>
+                        
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                            <h4 class="font-syne text-lg sm:text-xl font-bold uppercase text-white">
+                                VEHICLE DYNAMICS | LEAD
+                            </h4>
+                            <span class="font-mono text-xs text-zinc-400">AUG 2025 - PRESENT • 10 MOS</span>
+                        </div>
+
+                        <p class="text-zinc-300 text-xs sm:text-sm leading-relaxed font-sans">
+                            Leading the Vehicle Dynamics division for DTU's high-efficiency prototype vehicles. Directing motor/engine integration, steering assembly design, suspension layout architectures, and cross-functional engineering management.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 sm:gap-3 pt-2 font-mono text-xs">
+                            <span class="bg-zinc-900 border border-zinc-700 text-zinc-300 px-3 py-1 font-bold uppercase text-[10px] sm:text-xs">SOLIDWORKS</span>
+                            <span class="bg-zinc-900 border border-zinc-700 text-zinc-300 px-3 py-1 font-bold uppercase text-[10px] sm:text-xs">ANSYS MECHANICAL</span>
+                        </div>
+                    </div>
+
+                    <!-- Role 2: Co-Head of Vehicle Dynamics & Propulsion -->
+                    <div class="relative pl-6 border-l-2 border-zinc-500 space-y-3">
+                        <div class="absolute -left-[7px] top-0 w-3 h-3 bg-zinc-500"></div>
+                        
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                            <h4 class="font-syne text-base sm:text-lg font-bold uppercase text-zinc-200">
+                                PROPULSION AND DYNAMICS | CO-HEAD
+                            </h4>
+                            <span class="font-mono text-xs text-zinc-400">AUG 2025</span>
+                        </div>
+
+                        <p class="text-zinc-400 text-xs sm:text-sm leading-relaxed font-sans">
+                            Co-directed initial team setup, vehicle dynamic simulation models, and subsystem layout integrations for prototype testing.
+                        </p>
+                    </div>
+
+                    <!-- Role 3: Member -->
+                    <div class="relative pl-6 border-l-2 border-zinc-700 space-y-2">
+                        <div class="absolute -left-[7px] top-0 w-3 h-3 bg-zinc-700"></div>
+                        
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                            <h4 class="font-syne text-base sm:text-lg font-bold uppercase text-zinc-400">
+                                PROPULSION & DYNAMICS | MEMBER
+                            </h4>
+                            <span class="font-mono text-xs text-zinc-500">MAR 2025 - AUG 2025 • 6 MOS</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Experience Item 2: DRDO -->
+        <div class="bg-brand-card border border-white/10 p-6 sm:p-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Left Column: Org -->
+                <div class="lg:col-span-4 space-y-2 border-b lg:border-b-0 lg:border-r border-zinc-800 pb-6 lg:pb-0 lg:pr-6">
+                    <h3 class="font-syne text-3xl sm:text-4xl font-black text-white uppercase">
+                        DRDO
+                    </h3>
+                    <p class="font-mono text-xs text-zinc-400 font-bold uppercase">
+                        DEFENCE RESEARCH & DEVELOPMENT ORGANISATION
+                    </p>
+                    <div class="font-mono text-xs text-zinc-400 pt-1">
+                        <p class="text-white">RESEARCH INTERN • INTERNSHIP</p>
+                        <p>DEC 2025 - JAN 2026 • 2 MOS</p>
+                    </div>
+                </div>
+
+                <!-- Right Column: Certificate Action Button -->
+                <div class="lg:col-span-8 flex items-center justify-start lg:justify-end">
+                    <button onclick="openModal('drdo')" class="btn-white-outline text-xs uppercase px-8 py-4 flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <i class="fa-solid fa-certificate"></i>
+                        <span>COMPLETION CERTIFICATE</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+        <!-- FOOTER / CONTACT SECTION -->
+<section id="contact" class="bg-white text-black py-16 sm:py-24 px-4 sm:px-6 lg:px-8 selection:bg-black selection:text-white border-t-2 border-black">
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Header Label & Title -->
+        <div class="mb-10 sm:mb-16">
+            <p class="font-mono text-xs uppercase font-bold tracking-widest text-zinc-500 mb-3 flex items-center gap-2">
+                <span class="w-2 h-2 bg-black inline-block"></span>
+                DIRECT CONTACT & QUOTES
+            </p>
+            <h2 class="font-syne text-5xl sm:text-7xl lg:text-9xl font-black uppercase tracking-tighter leading-none">
+                SEND THE DATA.<br/>GET A QUOTE.
+            </h2>
+        </div>
+
+        <!-- Action Bar Tile (Email Only) -->
+        <div class="border-2 border-black bg-black text-white font-mono">
+            <a href="mailto:mdasif110059@gmail.com" class="p-6 sm:p-10 hover:bg-zinc-900 transition-colors flex flex-col justify-between h-44 sm:h-52 group">
+                <div class="flex justify-between items-center text-xs text-zinc-400 group-hover:text-white transition-colors">
+                    <span class="font-bold tracking-wider">EMAIL DIRECT</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-sm group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                </div>
+                <div>
+                    <div class="text-2xl sm:text-4xl font-bold tracking-tight text-white uppercase break-all">
+                        MAIL ME
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Meta Footer Info -->
+        <div class="mt-6 pt-6 border-t border-zinc-200 flex flex-col sm:flex-row justify-between items-start sm:items-center font-mono text-xs text-zinc-600 gap-3 sm:gap-4 uppercase tracking-wider font-semibold">
+            <span class="flex items-center gap-2">
+                <i class="fa-solid fa-location-dot text-black"></i>
+                LOCATION: NEW DELHI, INDIA
+            </span>
+            <span class="flex items-center gap-2">
+                <i class="fa-solid fa-globe text-black"></i>
+                PORTFOLIO: https://mdasif.in
+            </span>
+        </div>
+
+    </div>
+</section>
+    </main>
+
+    <!-- Project PDF & Certificate Modal Viewer Popup -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-card border border-white/20 max-w-2xl w-full p-6 sm:p-8 space-y-6 relative rounded-sm">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white text-xl p-2" aria-label="Close modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div id="modalContent" class="space-y-4">
+                <!-- Dynamically filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 py-8 text-zinc-500 font-mono text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <span class="text-zinc-300 font-bold">MD ASIF &copy; 2026. ALL RIGHTS RESERVED.</span>
+            </div>
+            
+            <div class="flex gap-6 text-zinc-400">
+                <a href="https://linkedin.com/in/mdasif04" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">LINKEDIN</a>
+                <a href="https://www.youtube.com/@livemdasif" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">YOUTUBE</a>
+                <a href="mailto:mdasif110059@gmail.com" class="hover:text-white transition">MAIL</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Modal & Navigation Script -->
+    <script>
+        const modalData = {
+            project1: {
+                title: "PROJECT 01: WHEEL ASSEMBLY (FEA)",
+                tags: "VEHICLE DYNAMICS / FEA / MANUFACTURE",
+                desc: "Full engineering documentation for ESVC Solar Car Wheel Assembly including finite element mesh stress distribution (Von Mises stress heatmaps), hub load calculations, and steering knuckle optimization.",
+                pdfName: "Wheel_Assembly_ESVC_FEA_Report.pdf"
+            },
+            project2: {
+                title: "PROJECT 02: F35-3BSM KINEMATICS",
+                tags: "REVERSE ENGINEERING / CAD / PRODUCT DESIGN",
+                desc: "3-Bearing Swivel Module (3BSM) thrust vectoring kinematic rotational matrix analysis and CAD assembly specification for vertical take-off and landing (VTOL) engine vectoring.",
+                pdfName: "F35_3BSM_Kinematics_Analysis.pdf"
+            },
+            project3: {
+                title: "PROJECT 03: STIRLING CRYOCOOLER",
+                tags: "THERMODYNAMICS / FEA & CFD / CAD",
+                desc: "1D Schmidt theory thermodynamic calculation model for 5 W at 80 K refrigeration. Includes 3D displacer assembly CAD and CFD mesh heat exchanger matrices yielding +15% COP optimization.",
+                pdfName: "Stirling_Cryocooler_1D_Model.pdf"
+            },
+            drdo: {
+                title: "DRDO RESEARCH INTERNSHIP CERTIFICATE",
+                tags: "DEFENCE RESEARCH & DEVELOPMENT ORGANISATION",
+                desc: "Official Certificate of Completion for the 2-month Defence Research Internship (Dec 2025 - Jan 2026). Specialization in propulsion kinematics and advanced simulation analysis.",
+                pdfName: "DRDO_Research_Internship_Certificate.pdf"
+            }
+        };
+
+        function openModal(key) {
+            const data = modalData[key];
+            if (!data) return;
+
+            const content = document.getElementById('modalContent');
+            content.innerHTML = `
+                <span class="font-mono text-xs text-zinc-400 uppercase tracking-widest font-bold">// DOCUMENT VIEWPORT</span>
+                <h3 class="font-syne text-2xl sm:text-3xl font-black uppercase text-white leading-tight">${data.title}</h3>
+                <p class="font-mono text-xs text-zinc-400">${data.tags}</p>
+                <p class="text-zinc-300 text-sm leading-relaxed">${data.desc}</p>
+                <div class="pt-4 border-t border-zinc-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 font-mono text-xs">
+                    <span class="text-zinc-400"><i class="fa-solid fa-file-pdf"></i> ${data.pdfName}</span>
+                    <a href="#" onclick="alert('Downloading ${data.pdfName} document sample...'); return false;" class="btn-white-solid px-6 py-2.5 uppercase text-center">
+                        DOWNLOAD PDF
+                    </a>
+                </div>
+            `;
+            document.getElementById('modalOverlay').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.add('hidden');
+        }
+
+        // Close on background overlay click
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modalOverlay')) closeModal();
+        });
+
+        // Mobile Menu Toggle & Navigation Logic
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.className = 'fa-solid fa-bars-staggered';
+            } else {
+                menuIcon.className = 'fa-solid fa-xmark';
+            }
+        });
+
+        // Close mobile menu when clicking any link
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.className = 'fa-solid fa-bars-staggered';
+            });
+        });
+    </script>
+</body>
+</html>
